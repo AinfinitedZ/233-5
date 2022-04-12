@@ -4,5 +4,8 @@ Finish randomArray method. Produce each random number by adding $b - a$ multiply
 
 4.11 14:41
 
-Finish insertSort method. and comments on it functions, include explaining how it works as a whole part and how it works for each line. 
+Finish insertSort method. and comments on its  functions, include explaining how it works as a whole part and how it works for each line. 
 
+4.11 20:34
+
+Finish quickSort method, and comments on its functions and explainations of all of its helper functions. 

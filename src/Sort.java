@@ -1,9 +1,8 @@
 public class Sort {
+
     /**
-     * implements insert sort to targeted array. Each iterations would
-     * shift all integers that are after targered insertion by one index right.
-     * The array should be ascending order after insertionSort. 
-     * @param arr the array that shall be sorted. 
+     * implements insert sort to targeted array. The array should be ascending order after insertionSort. 
+     * @param arr the array shall be sorted. 
      */
     public static void insertSort(int[] arr){
         // In term of insertSort, we traverse the array from left to right. The left part of the array which is already be traversed is named as 'sorted' array.
@@ -27,9 +26,71 @@ public class Sort {
         }
     }
 
-    public static void quickSort(int[] arr){}
+    /**
+     * implements quick sort to targeted array. The array should be ascending order after quickSort. 
+     * @param arr the array shall be sorted. 
+     */
+    public static void quickSort(int[] arr){
+        qSort(arr, 0, arr.length - 1);   // use a helper method because we shall use recursion here. 
+    }
 
-    public static void mergeSort(int[] arr){}
+    /**
+     * helper method which uased to implement recursion. Definition method of quick sort.
+     * @param arr the array passed by quickSort method
+     * @param first first index
+     * @param last last index
+     */
+    private static void qSort(int[] arr, int first, int last){
+        if(arr.length <= 1) return ;                // base conditiom of recursion
+        int split = partition(arr, first, last);    // help method partition() would divide the problem by half.
+        qSort(arr, first, split);                   // deal with first half of array by recursion.
+        qSort(arr, split + 1, last);                // deal with second half of array by recursion. 
+    
+    }
+
+    /**
+     * divide the array into half, and conquer each of it by categorizing inside elements by pivot, a random element
+     * in the middle of the array. 
+     * @param arr the array passed by qSort. 
+     * @param first first index
+     * @param last last index
+     * @return
+     */
+    private static int partition(int[] arr, int first, int last){
+        int pivot = arr[(first + last) / 2];        // we always choose the pivot at the middle of array
+        int i = first - 1;                          // i going from left to right. 
+        int j = last + 1;                           // j going from right to left. 
+        while(true){
+            do{                                     // use do...while so that i++ would be executed at least once. Thus qSort would always terminate. 
+                                                    // this is the reason why i should be one less from beginning, one may avoid IndexOutOfBoundException.
+                i++;
+            } while(arr[i] < pivot);
+            do{
+                j--;                                // same reason as above. 
+            } while(arr[j] > pivot); 
+            if(i < j){                              // after several iterations, arr[i] should 
+                swap(arr, i, j);                    // use a helper method swap() to swap 
+            } else {
+                return j;                           // as two index overcross or meet each other at pivot, j stands for another terminar or begining of next qSort. 
+            }
+        }
+    }
+    
+    /**
+     * Simple swap method that take three movements. 
+     * @param arr the array passed by partition method.
+     * @param firstIndex first index 
+     * @param secondIndex second index
+     */
+    private static void swap(int[] arr, int firstIndex, int secondIndex){
+        int temp = arr[firstIndex];
+        arr[firstIndex] = arr[secondIndex];
+        arr[secondIndex] = temp;
+    }
+
+    public static void mergeSort(int[] arr){
+        
+    }
 
     /**
      * Return an array with i integers that each of them are between [a,b]
