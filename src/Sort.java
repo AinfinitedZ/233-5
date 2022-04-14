@@ -60,7 +60,7 @@ public class Sort {
      * @param arr the array passed by qSort. 
      * @param first first index
      * @param last last index
-     * @return
+     * @return middle index
      */
     private static int partition(int[] arr, int first, int last){
         int pivot = arr[(first + last) / 2];        // we always choose the pivot at the middle of array
