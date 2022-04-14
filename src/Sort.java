@@ -1,7 +1,9 @@
 public class Sort {
-
     /**
-     * implements insert sort to targeted array. The array should be ascending order after insertionSort. 
+     * Insertion Sort iterates from the most left element through whole array, one by one. 
+     * During the procedure, subarray in the left of the element is sorted, and in the right would remain unsorted.
+     * For each iteration, insertion sort removes one element from unsorted suarray, traverse the sorted subarray 
+     * to find its position - all element smaller than it are in the left , and vice versa for the right. 
      * @param arr the array shall be sorted. 
      */
     public static void insertSort(int[] arr){
@@ -27,7 +29,11 @@ public class Sort {
     }
 
     /**
-     * implements quick sort to targeted array. The array should be ascending order after quickSort. 
+     * quickSort works by divide-and-conquer. During the divide procedure, the iterations divide the array into two
+     * half subarrays recursively. For each iteration, a 'pivot' element would be selected, which is the median element
+     * of original array, that all element in the left subarray is lower than pivot, and vice versa for the right.
+     * During the conquer procedure, these subarrays are then sorted from single element through original array, due
+     * to the recalls of stacks. 
      * @param arr the array shall be sorted. 
      */
     public static void quickSort(int[] arr){
@@ -89,15 +95,27 @@ public class Sort {
     }
     
     /**
-     * implements merge sort to targeted array. The array should be ascending order after mergeSort.
+     * mergeSort works by divide-and-conquer. During the divide procedure, the iterations split the array into two
+     * half subarrays recursively. In implemention, 'split' could be substituted by passing the median index to next
+     * recursive iteration, to avoid large additional memory due to these subarrays. During the conquer procedure, 
+     * elements of both subarrays would be assigned ascendingly to a temporary array, which would also be passed in
+     * argument, from a single element through whole array. 
      * @param arr the array shall be sorted. 
      */
     public static void mergeSort(int[] arr){
+    
         if(arr.length <= 1) return;                 // deal with edge case
         int[] temp = new int[arr.length];           // temp array would be passed by argument that store all sorted elements 
         mSort(arr, temp, 0, arr.length - 1);  // helper method. Could be used by recursion.
     }
 
+    /**
+     * helper method. Mainly response to divide procedure. 
+     * @param arr the original array
+     * @param temp temp array that have same length as the original one. 
+     * @param start start index of array that tend to be divided.
+     * @param end end index of array that tend to be divided.
+     */
     private static void mSort(int[] arr, int[] temp, int start, int end){
         if(start == end) return;                        // base case
         int middle = (start + end) / 2;                 // keep dividing the original array into smaller array. 
@@ -106,6 +124,15 @@ public class Sort {
         merge(arr, temp, start, middle, middle+1, end); // stack recalls from single left and right elements through left and right half array. 
     }
 
+    /**
+     * helper method. Mainly response to conquer procedure. 
+     * @param arr the original array
+     * @param temp temp array that have same length as the original one. 
+     * @param leftStart start index of left subarray
+     * @param leftEnd end index of left subarray
+     * @param rightStart start index of right subarray
+     * @param rightEnd end index of right subarray
+     */
     private static void merge(int[] arr, int[] temp, int leftStart, int leftEnd, int rightStart, int rightEnd){
         int i = leftStart;                      // left index
         int j = rightStart;                     // right index
@@ -145,5 +172,4 @@ public class Sort {
         }
         return result;
     }
-
 }
