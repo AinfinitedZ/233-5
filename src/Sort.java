@@ -87,9 +87,45 @@ public class Sort {
         arr[firstIndex] = arr[secondIndex];
         arr[secondIndex] = temp;
     }
-
+    
+    /**
+     * implements merge sort to targeted array. The array should be ascending order after mergeSort.
+     * @param arr the array shall be sorted. 
+     */
     public static void mergeSort(int[] arr){
-        
+        if(arr.length <= 1) return;                 // deal with edge case
+        int[] temp = new int[arr.length];           // temp array would be passed by argument that store all sorted elements 
+        mSort(arr, temp, 0, arr.length - 1);  // helper method. Could be used by recursion.
+    }
+
+    private static void mSort(int[] arr, int[] temp, int start, int end){
+        if(start == end) return;                        // base case
+        int middle = (start + end) / 2;                 // keep dividing the original array into smaller array. 
+        mSort(arr, temp, start, middle);                // keep divide arr to left subarray until it contains only when one element.
+        mSort(arr, temp, middle+1, end);                // keep divide arr to right subarray until it contains only when one element. 
+        merge(arr, temp, start, middle, middle+1, end); // stack recalls from single left and right elements through left and right half array. 
+    }
+
+    private static void merge(int[] arr, int[] temp, int leftStart, int leftEnd, int rightStart, int rightEnd){
+        int i = leftStart;                      // left index
+        int j = rightStart;                     // right index
+        int k = leftStart;                      // Index used in temp
+        while(i <= leftEnd && j <= rightEnd){   // terminal condition: when one of the index reach the end of array. 
+            if(arr[i] <= arr[j]){               // Comparison : determine magnitude of element
+                temp[k++] = arr[i++];           // if one in left array is smaller than one in right, insert the left one.
+            } else {
+                temp[k++] = arr[j++];           // and vice versa. 
+            }
+        }
+        while(i <= leftEnd){                    // when the right index reach the end of array, all remaining left elements is bigger than the largest element in left
+            temp[k++] = arr[i++];               // and we assign these values into the rest space of temp array
+        }
+        while(j <= rightEnd){
+            temp[k++] = arr[j++];               // and vice versa. 
+        }
+        for(i = leftStart; i < rightEnd; i++){  // we could thus replace these unsorted elements in original array by sorted elements in temp array
+            arr[i] = temp[i];                   // by assign them value one by one. 
+        }
     }
 
     /**
